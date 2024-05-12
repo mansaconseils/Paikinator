@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FIFA Study Materials</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <style>
+      /** Demo styles **/
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+      body {
+        background: #085494;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        overflow: hidden;
+      }
+
+      /** Swiper styles **/
+
+      :root {
+        --swiper-pagination-right: 10px;
+        --swiper-pagination-left: auto;
+      }
+
+      .swiper {
+        user-select: none;
+        box-sizing: border-box;
+        overflow: hidden;
+        width: 100%;
+
+        height: 100%;
+
+        padding: 0px 0px;
+      }
+
+      .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+      }
+
+      .swiper-slide-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+      }
+
+      .swiper-slide-content-815a {
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0px 0px;
+        gap: 0px;
+      }
+      .swiper-slide-image-a4cc {
+        max-width: 100%;
+        min-width: 0;
+        max-height: 100%;
+        min-height: 0;
+        object-fit: contain;
+      }
+
+      .swiper-zoom-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .swiper-button-prev,
+      .swiper-button-next {
+        --vertical-button-width: calc(var(--swiper-navigation-size) / 44 * 27);
+        transform: rotate(90deg);
+        margin-top: 0;
+        margin-left: calc(0px - var(--vertical-button-width) / 2);
+        right: auto !important;
+        left: var(--swiper-navigation-top-offset, 50%) !important;
+      }
+      .swiper-button-prev,
+      .swiper-rtl .swiper-button-prev {
+        top: var(--swiper-navigation-sides-offset, 10px);
+        bottom: auto;
+      }
+      .swiper-button-next,
+      .swiper-rtl .swiper-button-next {
+        bottom: var(--swiper-navigation-sides-offset, 10px);
+        top: auto;
+      }
+
+      .swiper-rtl .swiper-button-prev::after {
+        content: "prev";
+      }
+      .swiper-rtl .swiper-button-next::after {
+        content: "next";
+      }
+    </style>
+  </head>
+  <body>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <script>
+      const jsonUrl = 'images.json';
+	  
+// #mode=include&pages=2,4,8
+// #mode=exclude&pages=2,4,8
+// #mode=start&start=50
+// #mode=all. 
+
+   document.addEventListener('DOMContentLoaded', () => {
+    // Récupérer les paramètres depuis l'URL
+    const hashParams = window.location.hash.substr(1).split('&').reduce((params, param) => {
+        let [key, value] = param.split('=');
+        params[key] = value;
+        return params;
+    }, {});
+
+    // Définir les valeurs par défaut
+    const mode = hashParams['mode'] || 'all';
+    let pages = hashParams['pages'] ? hashParams['pages'].split(',').map(Number) : [];
+    let startPage = parseInt(hashParams['start']) || 1; // Pour le mode 'start'
+
+    loadAndDisplayImages(mode, pages, startPage);
+});
+
+async function loadAndDisplayImages(mode, pages, startPage = 1) {
+    try {
+        const response = await fetch(jsonUrl);
+        if (!response.ok) {
+            throw new Error('Le fichier JSON n\'existe pas ou ne peut pas être chargé');
+        }
+        const images = await response.json();
+
+        let pagesToDisplay = [];
+
+        switch (mode) {
+            case 'include':
+                pagesToDisplay = pages;
+                break;
+            case 'exclude':
+                const allPages = Array.from({ length: 727 }, (_, i) => i + 1);
+                pagesToDisplay = allPages.filter(page => !pages.includes(page));
+                break;
+            case 'all':
+                pagesToDisplay = Array.from({ length: 727 }, (_, i) => i + 1);
+                break;
+            case 'start':
+                // Commencer à partir de la page spécifiée et continuer jusqu'à la dernière page
+                pagesToDisplay = Array.from({ length: 727 - startPage + 1 }, (_, i) => i + startPage);
+                break;
+            default:
+                console.error('Mode non supporté');
+                return;
+        }
+
+        pagesToDisplay.forEach(page => {
+            const pageNumber = String(page).padStart(3, '0');
+            if (images[pageNumber]) {
+                const swiperWrapper = document.querySelector('.swiper-wrapper');
+                const slideElement = document.createElement('div');
+                slideElement.className = 'swiper-slide swiper-slide-4737';
+                slideElement.dataset.hash = `slide-${page}`;
+
+                const contentElement = document.createElement('div');
+                contentElement.className = 'swiper-slide-content swiper-slide-content-815a';
+                contentElement.innerHTML = images[pageNumber];
+
+                slideElement.appendChild(contentElement);
+                swiperWrapper.appendChild(slideElement);
+            } else {
+                console.error(`L'image pour la page ${pageNumber} n'est pas disponible.`);
+            }
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+	  
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+ var swiper = new Swiper(".swiper", {
+        touchRatio: 0.75,
+        mousewheel: { enabled: true },
+        threshold: 7,
+        hashNavigation: { watchState: true, enabled: true },
+        observer: true,
+        observeParents: true,
+        resizeObserver: false,
+        resistance: false,
+        grabCursor: true,
+        slidesPerGroupAuto: false,
+        pagination: { type: "progressbar", el: ".swiper-pagination" },
+        centeredSlides: true,
+        direction: "vertical",
+        keyboard: { enabled: true },
+        freeMode: {
+          momentumRatio: 1.1,
+          momentumVelocityRatio: 1.1,
+          momentumBounceRatio: 1.2,
+          enabled: true,
+        },
+        zoom: { enabled: true },
+        a11y: { enabled: false },
+      });
+    </script>
+  </body>
+</html>

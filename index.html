@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triple Iframe Display</title>
+	<script>
+const primeDictionary = {
+    "3": "joueur, joueurs, jouer",
+    "5": "agent, agents, agence, agences",
+    "7": "entraîneur, entraîneurs",
+    "11": "entraîner, entraîne, entrainement, entrainements",
+    "13": "membre, membres",
+    "17": "parent, parents, père, pères, mère, mères",
+    "19": "professionnel, professionnels, professionnaliser",
+    "23": "recruteur, recruteurs, recruter, recrute, recrutement, recruté",
+    "29": "footballeur, footballeurs",
+    "31": "employé, employés, employer",
+    "37": "club, clubs",
+    "41": "association, associations",
+    "43": "fédération, fédérations",
+    "47": "confédération, confédérations",
+    "53": "commission, commissions",
+    "59": "organe, organes",
+    "61": "juridictionnel, juridictionnels",
+    "67": "centre, centres",
+    "71": "école, écoles",
+    "73": "contrat, contrats, contracter",
+    "79": "transfert, transferts, transférer, transféré",
+    "83": "transfert-relais",
+    "89": "règlement, règlements, règlementer, réglementer, règlementation, règlementations, réglementation",
+    "97": "représenter, représente, représentée, représenté",
+    "101": "interdire, interdit, interdiction",
+    "103": "obligation, obligations, obliger",
+    "107": "indemnité, indemnités",
+    "109": "clause, clauses",
+    "113": "sanction, sanctions, sanctionner",
+    "127": "éthique, éthiques",
+    "131": "discipline, disciplines",
+    "137": "violation, violations, violer",
+    "139": "juste cause",
+    "149": "accord, accords, accorder",
+    "151": "statut, statuts",
+    "157": "licence, licences",
+    "163": "demande, demandes, demander",
+    "167": "passeport, passeports",
+    "173": "législation, législations, légiférer",
+    "179": "validité, validités, valider",
+    "181": "approcher, approche",
+    "191": "payer, paye",
+    "193": "investissement, investissements, investir",
+    "197": "contribution, contributions, contribuer",
+    "199": "solidarité",
+    "211": "échange, échanges, échanger",
+    "223": "signaler, signale, signalement, signalé",
+    "227": "proposer, propose, proposition, proposé",
+    "229": "signé, signer",
+    "233": "verser, verse, versé",
+    "239": "reverser, reverse, reversé",
+    "241": "",
+    "251": "revente",
+    "257": "salaire, salaires",
+    "263": "argent",
+    "269": "pourcentage, pourcentages",
+    "271": "service, services",
+    "277": "offre, offres, offrir",
+    "281": "revenu, revenus",
+    "283": "montant, montants",
+    "293": "frais",
+    "307": "financier, financiers, financer, financière, financement",
+    "311": "tribunal, tribunaux",
+    "313": "arbitral, arbitraux, arbitre",
+    "317": "décision, décisions, décider",
+    "331": "droit, droits",
+    "337": "recours, recourir",
+    "347": "litige, litiges",
+    "349": "conformité, conformités, conformer",
+    "353": "jeune, jeunes",
+    "359": "an, ans, anniversaire, anniversaires, âge",
+    "367": "mineur, mineurs, enfant, enfants",
+    "373": "joueuse, joueuses",
+    "379": "pays, internationaux, étranger, étrangers",
+    "383": "congé maternité, enceinte",
+    "389": "exclusif, exclusifs, exclusivité, exclusivités",
+    "397": "année, années, annuel, annuellement",
+    "401": "enregistrement, enregistrements, enregistrer",
+    "409": "champion, champions, championnat, championnats",
+    "419": "match, matches, matchs",
+    "421": "période, périodes",
+    "431": "saison, saisons",
+	"433": "équipe, équipes",
+	"439": "",
+	"443": "",
+	"449": "",
+	"457": "",
+	"461": "",
+	"463": "",
+	"467": "",
+	"479": "",
+	"487": "",
+	"491": "",
+	"499": "",
+	"503": "",
+	"509": "",
+	"521": "",
+	"523": "",
+	"541 ": ""
+};
+
+
+const primeToPageDictionary = {
+"12872091423697921489047":["245"],
+"745536780987084901":["243"],
+"35975751839331":["242"],
+"6696367628627068131":["303"],
+"35455065":["245"],
+"44979726213807":["470","551","552","553"],
+"1227615":["484","483","51","116"],
+"75072739786518363":["402","403"],
+"2652492508201":["114"],
+"2283268567147917555":["245","291"],
+"6270814832515":["124"],
+"7035080637955":["292"],
+"9762064284657":["300"],
+"2366245576587":["299"],
+"135143599554969522874679059240665":["408"],
+"186401683328927457":["343","344","251","252"],
+"93090583606759016560369957":["126"],
+"7048099034367":["230"],
+"2153803887647283":["299"],
+"15117854615":["420"],
+"115239":["299"],
+"926554588855":["680"],
+"3390702787724071705955731149":["297","251"],
+"626936857635845":["631","411","679"],
+"39121099":["483","52"],
+"2394819635":["696","695","416","410"],
+"43845":["219"],
+"3060980427157722834231027":["247","248"],
+"2059357457695258202896261019762808565209":["299"],
+"12368903956757625142785":["683","684","408"],
+"9494329":["22","23"],
+"48766555":["670"],
+"1315088372187957":["314"],
+"21590845":["691","402","616"],
+"845664767":["146","147"],
+"412748959937163":["251"],
+"13376506765021095":["303"],
+"23444495":["666","684","616"],
+"1587189":["392"],
+"786637971892405765095":["250","252","253","43"],
+"148055690604530785":["667","615"],
+"30858243440912668172348795921385":["403","404","682","683","616"],
+"1129855256748801192237":["125","126","650","261"],
+"7119028650199166807382784965":["404","681"],
+"95716857145":["392"],
+"332600595732073":["63","64","65","50"],
+"45496190666397759":["245","215"],
+"26657432683565":["403","404"],
+"9336870923":["260"],
+"136685412935140843672849622145":["404"],
+"449939945":["615"],
+"364305":["292"],
+"176409522265432749":["302"],
+"262435705":["400","399"],
+"1652878144087":["116"],
+"1260045843":["299"],
+"1612875383":["616","277","706","690"],
+"1995":["680","671","615"]
+};
+</script>
+    <style>
+        body, html {
+		background-color: #085494;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        }
+        .iframe-container {
+            display: flex; /* Uses flexbox to layout the iframes in a row */
+            width: 100%;
+            height: 100%;
+        }
+        iframe {
+            width: 33%; /* Each iframe takes up one-third of the container width */
+            height: 100%; /* Sets the iframe height to fill the container vertically */
+            border: none; /* Removes the border around iframes */
+        }
+		
+		body {
+    transition: margin-top 0.3s ease-in-out; /* Ajoute la transition pour la marge supérieure */
+}
+
+.body-pushed-down {
+    margin-top: 100px; /* Hauteur de votre barre de recherche */
+}
+
+		
+		  
+#customSearchBar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+   background-color: #085494;
+   color: #FFF;
+   opacity : 85%;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transform: translateY(-100%); /* S'assure que la barre est visible */
+    transition: transform 0.3s ease-in-out;
+}
+
+#customWordsBar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+   background-color: #38343c;
+   opacity : 85%;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transform: translateY(100%); /* S'assure que la barre est visible */
+    transition: transform 0.3s ease-in-out;
+}
+
+input[type="text"], button, select {
+    padding: 8px 10px;
+    font-size: 20px;
+    border: 4px solid  #FFF
+    border-radius: 4px;
+    background-color: white;
+	color: #FFF;
+}
+
+input[type="text"] {
+    flex-grow: 1; /* Permet au champ de texte de prendre plus d'espace */
+    margin-right: 10px;
+	background-color: #085494;
+   opacity : 85%;
+}
+
+button, select {
+    cursor: pointer;
+		background-color: #085494;
+	color: #FFF;
+}
+
+button {
+    cursor: pointer;
+	background-color: #085494;
+	color: #FFF ;
+}
+
+button:hover, select:hover {
+	background-color: #FFF;
+	color: #38343c;
+}
+
+select:focus {
+    outline: none;
+    border-color: #888;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .hidden {
+        display: none;
+    }
+    textarea {
+        width: 300px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+	
+	    #responseContainer {
+        max-width: 600px;
+        margin: auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #response, #debugData {
+        background-color: #f0f0f0;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        min-height: 50px;
+        overflow-wrap: break-word;
+    }
+    
+    </style>
+</head>
+<body>
+
+
+<div id="customSearchBar">
+
+ <input type="text" id="message" placeholder="Écrivez votre texte ici..." onkeypress="handleKeyPress(event)">
+    <button onclick="transformAndDisplay()">Filtrer</button>
+    <div id="outputDiv" style="display:none;"></div>
+    <div id="outputKeys" style="display:none;"></div>
+    <div id="outputProduct" style="display:none;"></div>
+    <div id="outputPages" style="display:none;"></div>
+   
+     <!--    <input type="text" id="message" placeholder="Rechercher dans la page...">
+        <button id="askButton">Rechercher</button>
+        <div id="response" style="display:none">Analyse</div>
+		
+        <div id="debugData" style="display:none"></div>
+	
+	
+	 <button id="prev-page">⟵</button>
+	 
+	   <span id="page-count" style="display:none"></span>
+	
+    <button id="next-page">⟶</button> -->
+    <button onclick="closeSearch()">✕</button>
+	
+
+</div>
+
+<div id="customWordsBar" style="display:none"> 
+<div id="buttons-container"></div>
+</div>
+
+
+    <div class="iframe-container">
+        <iframe id="frame_gauche" src="svg.html#mode=start&start=1"></iframe>
+        <iframe id="frame_milieu" src="svg.html#mode=start&start=2"></iframe>
+        <iframe id="frame_droite" src="svg.html#mode=start&start=3"></iframe>
+    </div>
+	
+<script>
+
+function handleKeyPress(event) {
+    // Vérifiez si la touche pressée est "Entrer"
+    if (event.key === "Enter") {
+        event.preventDefault();  // Empêche tout autre comportement par défaut (comme soumettre un formulaire)
+        // Appel de la fonction qui est déclenchée par le clic sur le bouton
+        transformAndDisplay();
+    }
+}
+
+
+function transformAndDisplay() {
+    // Récupérer le texte du textarea
+    let text = document.getElementById("message").value;
+
+    // Remplacer la ponctuation par des espaces
+    text = text.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()'"“”‘’]/g," ");
+
+    // Convertir en minuscules
+    text = text.toLowerCase();
+
+    // Diviser le texte en mots
+    let words = text.split(/\s+/);
+
+    let foundWords = new Set();
+    let foundKeys = new Set();
+
+    // Vérifier chaque mot contre le dictionnaire
+    for (let word of words) {
+        for (let key in primeDictionary) {
+            let dictionaryWords = primeDictionary[key].split(", ");
+            if (dictionaryWords.includes(word)) {
+                foundWords.add(word);
+                foundKeys.add(key); // Stocker la clé si le mot est trouvé
+                break;
+            }
+        }
+    }
+
+    // Afficher les mots trouvés
+    document.getElementById("outputDiv").innerText = Array.from(foundWords).join(", ");
+
+    // Afficher les clés associées aux mots trouvés
+    let keysArray = Array.from(foundKeys);
+    document.getElementById("outputKeys").innerText = keysArray.join(", ");
+
+    // Calculer la multiplication des clés
+    let product = keysArray.reduce((acc, key) => acc * BigInt(key), BigInt(1));
+    document.getElementById("outputProduct").innerText = "Produit des clés : " + product.toString();
+
+    // Vérifier le produit dans primeToPageDictionary et ajuster les cadres en conséquence
+    let pages = primeToPageDictionary[product.toString()] || [];
+    document.getElementById("outputPages").innerText = "Pages associées : " + pages.join(", ");
+    if (pages.length > 0) {
+        if (pages.length >= 1) document.getElementById('frame_gauche').src = "svg.html#slide-" + pages[0];
+        if (pages.length >= 2) document.getElementById('frame_milieu').src = "svg.html#slide-" + pages[1];
+        if (pages.length >= 3) document.getElementById('frame_droite').src = "svg.html#slide-" + pages[2];
+    }
+}
+</script>
+	
+<script>
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'f' && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault(); // Empêche l'action par défaut (ouvrir la recherche du navigateur)
+        toggleSearchBar(true); // Affiche la barre de recherche personnalisée
+        toggleWordsBar(true); // Affiche la barre des mots
+
+        // Vérifie si le CSV a déjà été chargé
+        if (!document.csvLoaded) {
+            // Ajouter ici le code pour charger le CSV si nécessaire
+        }
+    } else if (event.key === "Escape") {
+        toggleSearchBar(false); // Cache la barre de recherche
+        toggleWordsBar(false); // Cache la barre des mots
+    } else if (event.key === "8" && event.ctrlKey) { // Utilise 'event.key' pour '8'
+        // Modifier l'URL de l'iframe de droite
+        document.getElementById('frame_gauche').src = "svg.html#slide-411";
+		document.getElementById('frame_milieu').src = "svg.html#slide-631";
+		document.getElementById('frame_droite').src = "svg.html#slide-679";
+    }
+});
+
+
+
+function toggleSearchBar(show) {
+    const searchBar = document.getElementById('customSearchBar');
+    const body = document.body;
+
+    if (show) {
+        searchBar.style.transform = 'translateY(0%)'; // Affiche la barre
+        body.classList.add('body-pushed-down'); // Ajuste le contenu en fonction de la hauteur de la barre
+    } else {
+        searchBar.style.transform = 'translateY(-100%)'; // Cache la barre
+        body.classList.remove('body-pushed-down'); // Remet le contenu en place
+    }
+}
+
+function toggleWordsBar(show) {
+    const wordsBar = document.getElementById('customWordsBar');
+    const body = document.body;
+
+    if (show) {
+     
+		wordsBar.style.transform = 'translateY(0%)'; // Affiche la barre
+        body.style.marginBottom = wordsBar.offsetHeight + 'px'; // Ajuste le contenu en fonction de la hauteur de la barre
+    } else {
+        wordsBar.style.transform = 'translateY(100%)'; // Cache la barre
+        body.style.marginBottom = '0'; // Remet le contenu en place
+    }
+}
+
+function closeSearch() {
+    toggleSearchBar(false);
+	 toggleWordsBar(false);
+}
+
+
+
+document.getElementById('message').addEventListener('input', handleTextareaInput);
+
+
+let globalWordCounts = {};
+let globalWordPages = {};
+
+function parseFile(text) {
+    const lines = text.split(/\r?\n/);
+    globalWordCounts = {};
+    globalWordPages = {};
+
+    lines.forEach((line, index) => {
+        if (!line.trim()) return;
+        const words = line.split(/[ ,;:.!?()]+/).filter(word => isNaN(word) && word.trim()).map(word => word.toLowerCase());
+
+        words.forEach(word => {
+            if (!globalWordCounts[word]) globalWordCounts[word] = 0;
+            globalWordCounts[word] += 1;
+            if (!globalWordPages[word]) globalWordPages[word] = new Set();
+            globalWordPages[word].add(index);
+        });
+    });
+}
+</script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+$(document).ready(function() {
+    $('#askButton').click(function() {
+        var messageContent = $('#message').val();
+
+        // Create message and run
+        $.ajax({
+            url: 'https://hook.eu2.make.com/7r711zcerdt5sqw8cl9jwfizfzbdsykf',
+            method: 'POST',
+            data: { message: messageContent,
+userID: 'QROnZQoXQSa5fpXCBV5ABg'			},
+            dataType: 'json',
+            beforeSend: function() {
+                $('#response').html('Preparing the assistant...');
+            },
+            success: function(data) {
+                // Check response every 2 seconds
+                var checkResponse = setInterval(function() {
+                    $.ajax({
+                        url: 'check_glide.php',
+                        method: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            // If there is an assistant message, display it and stop checking
+                            if (data.content && data.content[0].text.value) {
+                                $('#response').html(data.content[0].text.value);
+                                clearInterval(checkResponse);
+                            } else {
+                                $('#response').html('Waiting for assistant...');
+                            }
+                        },
+                        error: function() {
+                            $('#response').html('<p>There was an error processing your request. Please try again.</p>');
+                        }
+                    });
+                }, 20000);
+            },
+            error: function() {
+                $('#response').html('<p>There was an error processing your request. Please try again.</p>');
+            }
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var lastContent = null; // Variable pour stocker le dernier contenu reçu
+
+    function checkContent() {
+        fetch('check_glide.php') // Requête à check_glide.php
+            .then(response => response.text()) // Convertit la réponse en texte
+            .then(text => {
+                if (lastContent !== text) { // Vérifie si le contenu a changé
+                    lastContent = text; // Met à jour le dernier contenu
+                    try {
+                        var jsonObj = JSON.parse(text); // Tente de parser le texte en JSON
+                        if (jsonObj && jsonObj.Page) {
+                            var newHash = '#slide-' + jsonObj.Page;
+                            window.location.hash = newHash; // Change le fragment de l'URL
+                        }
+                    } catch (e) {
+                        // Si le texte n'est pas du JSON valide, on ne fait rien.
+                    }
+                }
+            })
+            .catch(error => console.error('Error fetching the data:', error));
+    }
+
+    setInterval(checkContent, 20000); // Vérifie le contenu toutes les 5 secondes
+});
+</script>
+
+</body>
+</html>
